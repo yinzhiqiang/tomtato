@@ -6,14 +6,9 @@ module.exports = {
         name: 'Tomtato - A time and task management application - Development'
     },
     facebook: {
-        clientID: 'APP_ID',
-        clientSecret: 'APP_SECRET',
+        clientID: '1412518242329985',
+        clientSecret: 'dc5d7779fcae9eeabe8ce9d156eafe36',
         callbackURL: 'https://tomtato-c9-coocoon.c9.io/auth/facebook/callback'
-    },
-    twitter: {
-        clientID: 'CONSUMER_KEY',
-        clientSecret: 'CONSUMER_SECRET',
-        callbackURL: 'https://tomtato-c9-coocoon.c9.io/auth/twitter/callback'
     },
     github: {
         clientID: '1d31bcf4e27cf7920af8',

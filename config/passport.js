@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose'),
     LocalStrategy = require('passport-local').Strategy,
-    TwitterStrategy = require('passport-twitter').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GitHubStrategy = require('passport-github').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
@@ -51,37 +50,6 @@ module.exports = function(passport) {
                     });
                 }
                 return done(null, user);
-            });
-        }
-    ));
-
-    // Use twitter strategy
-    passport.use(new TwitterStrategy({
-            consumerKey: config.twitter.clientID,
-            consumerSecret: config.twitter.clientSecret,
-            callbackURL: config.twitter.callbackURL
-        },
-        function(token, tokenSecret, profile, done) {
-            User.findOne({
-                'twitter.id_str': profile.id
-            }, function(err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (!user) {
-                    user = new User({
-                        name: profile.displayName,
-                        username: profile.username,
-                        provider: 'twitter',
-                        twitter: profile._json
-                    });
-                    user.save(function(err) {
-                        if (err) console.log(err);
-                        return done(err, user);
-                    });
-                } else {
-                    return done(err, user);
-                }
             });
         }
     ));
@@ -161,7 +129,7 @@ module.exports = function(passport) {
                     user = new User({
                         name: profile.displayName,
                         email: profile.emails[0].value,
-                        username: profile.username,
+                        username: profile.emails[0].value,
                         provider: 'google',
                         google: profile._json
                     });
