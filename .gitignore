@@ -3,7 +3,8 @@
 .sass-cache/
 .bower-*/
 .idea/
-.c9revisions/
 node_modules/
 public/lib
-test/coverage/
+test/coverage
+mean.iml
+.c9revisions/
