@@ -24,5 +24,10 @@ module.exports = {
         clientID: '75q8afc9y9dknm',
         clientSecret: 'DAUAqMD8bSN8xQGK',
         callbackURL: 'https://tomtato-c9-coocoon.c9.io/auth/linkedin/callback'
-    }
+    },
+     twitter: {
+        clientID: 'CONSUMER_KEY',
+        clientSecret: 'CONSUMER_SECRET',
+        callbackURL: 'http://localhost:3000/auth/twitter/callback'
+    },
 };
