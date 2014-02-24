@@ -2,13 +2,13 @@
 
 var mongoose = require('mongoose'),
     LocalStrategy = require('passport-local').Strategy,
+    TwitterStrategy = require('passport-twitter').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GitHubStrategy = require('passport-github').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     LinkedinStrategy = require('passport-linkedin').Strategy,
     User = mongoose.model('User'),
     config = require('./config');
-
 
 module.exports = function(passport) {
 
@@ -50,6 +50,37 @@ module.exports = function(passport) {
                     });
                 }
                 return done(null, user);
+            });
+        }
+    ));
+
+    // Use twitter strategy
+    passport.use(new TwitterStrategy({
+            consumerKey: config.twitter.clientID,
+            consumerSecret: config.twitter.clientSecret,
+            callbackURL: config.twitter.callbackURL
+        },
+        function(token, tokenSecret, profile, done) {
+            User.findOne({
+                'twitter.id_str': profile.id
+            }, function(err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    user = new User({
+                        name: profile.displayName,
+                        username: profile.username,
+                        provider: 'twitter',
+                        twitter: profile._json
+                    });
+                    user.save(function(err) {
+                        if (err) console.log(err);
+                        return done(err, user);
+                    });
+                } else {
+                    return done(err, user);
+                }
             });
         }
     ));
@@ -152,9 +183,9 @@ module.exports = function(passport) {
             profileFields: ['id', 'first-name', 'last-name', 'email-address']
         },
         function(accessToken, refreshToken, profile, done) {
-          User.findOne({
+            User.findOne({
                 'linkedin.id': profile.id
-            }, function (err, user) {
+            }, function(err, user) {
                 if (!user) {
                     user = new User({
                         name: profile.displayName,
@@ -162,7 +193,7 @@ module.exports = function(passport) {
                         username: profile.emails[0].value,
                         provider: 'linkedin'
                     });
-                    user.save(function (err) {
+                    user.save(function(err) {
                         if (err) console.log(err);
                         return done(err, user);
                     });
