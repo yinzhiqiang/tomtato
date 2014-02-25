@@ -8,4 +8,4 @@ services:
 notifications:
   email:
     - coocoon@gmail.com
-  sqwiggle: cli_11dd3c1e0ec8fefde241ac8853fca9af@tomtato
+  sqwiggle: cli_27aacf693be6668f400d8e866e4208c8@tomtato
